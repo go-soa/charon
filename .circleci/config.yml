@@ -28,7 +28,7 @@ jobs:
     executor: golang-executor
     steps:
     - checkout
-    - lol:
+    - run:
         name: insight
         command: |
           pwd

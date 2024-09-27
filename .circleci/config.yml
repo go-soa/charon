@@ -23,6 +23,7 @@ executors:
     - image: cimg/go:1.23.1
     environment:
       GOPATH: "/home/circleci/project/go"
+      GOBIN:   "/home/circleci/project/go/binŁ"
     working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
 jobs:
   setup_golang:

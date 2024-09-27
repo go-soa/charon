@@ -27,9 +27,10 @@ jobs:
     executor: golang-executor
     steps:
     - checkout
-    - lol:
+    - run:
         name: insight
         command: |
+          env
           pwd
           ls -lha ~/project
     - restore_cache:

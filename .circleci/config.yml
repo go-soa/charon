@@ -109,6 +109,7 @@ jobs:
           env
           pwd
           ls -lha ~/project
+          ls -lha /home/circleci/go/bin
           ls -lha /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
     - run:
         name: Lint protobuf

@@ -103,8 +103,7 @@ jobs:
         name: Install command line tools
         command: |
           go install github.com/ckaznocha/protoc-gen-lint@v0.3.0
-          which protoc-gen-lint
-          env
+          ls -lha /home/circleci/project/go/bin
     - run:
         name: insight
         command: |

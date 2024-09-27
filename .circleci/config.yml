@@ -29,6 +29,11 @@ jobs:
     executor: golang-executor
     steps:
     - checkout
+    - restore_cache:
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
+    - run:
+        name: Install dependencies
+        command: go mod vendor
     - run:
         name: insight
         command: |
@@ -36,11 +41,6 @@ jobs:
           pwd
           ls -lha ~/project
           ls -lha /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
-    - restore_cache:
-        key: v1-golang-dependency-{{ checksum "go.sum" }}
-    - run:
-        name: Install dependencies
-        command: go mod vendor
     - save_cache:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
         paths:

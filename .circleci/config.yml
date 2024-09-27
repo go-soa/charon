@@ -33,6 +33,7 @@ jobs:
           env
           pwd
           ls -lha ~/project
+          ls -lha /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
     - restore_cache:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:

@@ -55,9 +55,9 @@ jobs:
         name: Install tools
         command: |
           bash ./.circleci/scripts/get_tool.sh github.com/golang/protobuf/protoc-gen-go v1.2.0
-          go install google.golang.org/grpc
-          go install golang.org/x/tools/cmd/goimports
-          go install github.com/codeclimate/test-reporter
+          go install google.golang.org/cmd/protoc-gen-go-grpc@v1.67.0
+          go install golang.org/x/tools/cmd/goimports@v0.25.0
+          go install github.com/codeclimate/test-reporter@v0.11.1
           bash ./.circleci/scripts/install_protoc.sh
     - run:
         name: Generate protobuf

@@ -59,6 +59,7 @@ jobs:
           go install golang.org/x/tools/cmd/goimports@v0.25.0
           curl -L -O https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 
           mv test-reporter-latest-linux-amd64 /home/circleci/go/bin/test-reporter
+          chmod +x /home/circleci/go/bin/test-reporter
           bash ./.circleci/scripts/install_protoc.sh linux
     - run:
         name: Generate protobuf

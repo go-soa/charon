@@ -21,6 +21,8 @@ executors:
   golang-executor:
     docker:
     - image: cimg/go:1.23.1
+    environment:
+      GOPATH: "/home/circleci/project/go"
     working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
 jobs:
   setup_golang:

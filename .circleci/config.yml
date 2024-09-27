@@ -1,12 +1,20 @@
 version: 2.1
 
 commands:
+  wtf:
+    steps:
+      - run:
+          name: test
+          command: |
+            pwd
+            ls -lha ~/project
   mkdir_working_directory:
     steps:
     - run:
         name: Initialize working directory
         working_directory: /
         command: |
+          
           sudo mkdir -p /go/src/github.com/piotrkowalczuk/charon
           sudo chmod -R 777 /go/src/github.com/piotrkowalczuk/charon
 executors:

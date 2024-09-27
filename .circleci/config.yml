@@ -101,7 +101,7 @@ jobs:
     - run:
         name: Install command line tools
         command: |
-          go install github.com/ckaznocha/protoc-gen-lint
+          go get -u github.com/ckaznocha/protoc-gen-lint
     - run:
         name: insight
         command: |

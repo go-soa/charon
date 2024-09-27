@@ -7,22 +7,21 @@ commands:
         name: Initialize working directory
         working_directory: /
         command: |
-          
-          sudo mkdir -p /go/src/github.com/piotrkowalczuk/charon
-          sudo chmod -R 777 /go/src/github.com/piotrkowalczuk/charon
+          sudo mkdir -p /home/circleci/project
+          sudo chmod -R 777 /home/circleci/project
 executors:
   python-executor:
     docker:
     - image: circleci/python:3
-    working_directory: /go/src/github.com/piotrkowalczuk/charon
+    working_directory: /home/circleci/project
   java-executor:
     docker:
     - image: circleci/openjdk:8
-    working_directory: /go/src/github.com/piotrkowalczuk/charon
+    working_directory: /home/circleci/project
   golang-executor:
     docker:
     - image: cimg/go:1.23.1
-#    working_directory: /go/src/github.com/piotrkowalczuk/charon
+#    working_directory: /home/circleci/project
 jobs:
   setup_golang:
     executor: golang-executor
@@ -49,7 +48,7 @@ jobs:
       environment:
         POSTGRES_USER: test
         POSTGRES_DB: test
-    working_directory: /go/src/github.com/piotrkowalczuk/charon
+    working_directory: /home/circleci/project
     steps:
     - checkout
     - restore_cache:

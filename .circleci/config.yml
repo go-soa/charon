@@ -34,13 +34,6 @@ jobs:
     - run:
         name: Install dependencies
         command: go mod vendor
-    - run:
-        name: insight
-        command: |
-          env
-          pwd
-          ls -lha ~/project
-          ls -lha /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
     - save_cache:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
         paths:
@@ -61,9 +54,9 @@ jobs:
         name: Install tools
         command: |
           bash ./.circleci/scripts/get_tool.sh github.com/golang/protobuf/protoc-gen-go v1.2.0
-          go get -u google.golang.org/grpc
-          go get -u golang.org/x/tools/cmd/goimports
-          go get -u github.com/codeclimate/test-reporter
+          go install google.golang.org/grpc
+          go install golang.org/x/tools/cmd/goimports
+          go install github.com/codeclimate/test-reporter
           bash ./.circleci/scripts/install_protoc.sh
     - run:
         name: Generate protobuf
@@ -108,7 +101,14 @@ jobs:
     - run:
         name: Install command line tools
         command: |
-          go get -u github.com/ckaznocha/protoc-gen-lint
+          go install github.com/ckaznocha/protoc-gen-lint
+    - run:
+        name: insight
+        command: |
+          env
+          pwd
+          ls -lha ~/project
+          ls -lha /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
     - run:
         name: Lint protobuf
         command: bash ./.circleci/scripts/generate.sh lint

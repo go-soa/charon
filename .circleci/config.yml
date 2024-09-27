@@ -7,27 +7,27 @@ commands:
         name: Initialize working directory
         working_directory: /
         command: |
-          sudo mkdir -p /home/circleci/project
-          sudo chmod -R 777 /home/circleci/project
+          sudo mkdir -p /home/circleci/project/home/circleci/project/go/src/github.com/piotrkowalczuk/charon
+          sudo chmod -R 777 /home/circleci/project/home/circleci/project/go/src/github.com/piotrkowalczuk/charon
 executors:
   python-executor:
     docker:
     - image: circleci/python:3
-    working_directory: /home/circleci/project
+    working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
   java-executor:
     docker:
     - image: circleci/openjdk:8
-    working_directory: /home/circleci/project
+    working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
   golang-executor:
     docker:
     - image: cimg/go:1.23.1
-#    working_directory: /home/circleci/project
+    working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
 jobs:
   setup_golang:
     executor: golang-executor
     steps:
     - checkout
-    - run:
+    - lol:
         name: insight
         command: |
           pwd
@@ -48,7 +48,7 @@ jobs:
       environment:
         POSTGRES_USER: test
         POSTGRES_DB: test
-    working_directory: /home/circleci/project
+    working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
     steps:
     - checkout
     - restore_cache:
@@ -179,7 +179,7 @@ jobs:
         command: bash ./.circleci/scripts/install_protoc.sh
     - run:
         environment:
-          GOPATH: "/go"
+          GOPATH: "/home/circleci/project/go"
         name: Generate protobuf
         command: bash ./.circleci/scripts/generate.sh java
   generate_python:
@@ -201,7 +201,7 @@ jobs:
     - run:
         name: Generate protobuf
         environment:
-          GOPATH: "/go"
+          GOPATH: "/home/circleci/project/go"
         command: |
           . venv/bin/activate
           bash ./.circleci/scripts/generate.sh python

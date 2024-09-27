@@ -28,16 +28,12 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
-    - run:
-        name: Install dep
-        command: |
-          go install github.com/golang/dep/cmd/dep@v0.5.4
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install dependencies
-        command: dep ensure -vendor-only
+        command: go mod vendor
     - save_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
         paths:
         - "vendor"
   test_golang:
@@ -51,7 +47,7 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install tools
         command: |
@@ -88,7 +84,7 @@ jobs:
     - store_artifacts:
         path: /tmp/test-results
     - save_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
         paths:
         - "vendor"
   lint_protobuf:
@@ -96,7 +92,7 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install protoc
         command: bash ./.circleci/scripts/install_protoc.sh
@@ -112,7 +108,7 @@ jobs:
     steps:
     - checkout
     - restore_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Build
         command: |
@@ -172,7 +168,7 @@ jobs:
     - mkdir_working_directory
     - checkout
     - restore_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install protoc
         command: bash ./.circleci/scripts/install_protoc.sh
@@ -187,7 +183,7 @@ jobs:
     - mkdir_working_directory
     - checkout
     - restore_cache:
-        key: v1-golang-dependency-{{ checksum "Gopkg.lock" }}
+        key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install python packages
         command: |

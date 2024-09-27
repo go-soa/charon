@@ -28,11 +28,16 @@ jobs:
     executor: golang-executor
     steps:
     - checkout
+    - lol:
+        name: insight
+        command: |
+          pwd
+          ls -lha ~/project
     - restore_cache:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install dependencies
-        command: dep ensure -vendor-only
+        command: go mod download
     - save_cache:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
         paths:

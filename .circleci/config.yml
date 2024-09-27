@@ -32,7 +32,7 @@ jobs:
     - run:
         name: Install dep
         command: |
-          go get -u github.com/golang/dep/cmd/dep
+          go install github.com/golang/dep/cmd/dep@v0.5.4
     - run:
         name: Install dependencies
         command: dep ensure -vendor-only

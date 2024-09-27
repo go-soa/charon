@@ -12,7 +12,7 @@ commands:
 executors:
   python-executor:
     docker:
-    - image: circleci/python:3
+    - image: cimg/python:3.12.6
     working_directory: /go/src/github.com/piotrkowalczuk/charon
   java-executor:
     docker:
@@ -20,7 +20,7 @@ executors:
     working_directory: /go/src/github.com/piotrkowalczuk/charon
   golang-executor:
     docker:
-    - image: circleci/golang
+    - image: cimg/go:1.23.1
     working_directory: /go/src/github.com/piotrkowalczuk/charon
 jobs:
   setup_golang:
@@ -38,8 +38,8 @@ jobs:
         - "vendor"
   test_golang:
     docker:
-    - image: circleci/golang
-    - image: circleci/postgres:9.6-alpine
+    - image: cimg/go:1.23.1
+    - image: cimg/postgres:9.6
       environment:
         POSTGRES_USER: test
         POSTGRES_DB: test

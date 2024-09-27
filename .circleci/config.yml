@@ -57,7 +57,8 @@ jobs:
           go install github.com/golang/protobuf/protoc-gen-go@v1.2.0
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
           go install golang.org/x/tools/cmd/goimports@v0.25.0
-          go install github.com/codeclimate/test-reporter@v0.11.1
+          curl -L -O https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 
+          mv test-reporter-latest-linux-amd64 /home/circleci/go/bin/test-reporter
           bash ./.circleci/scripts/install_protoc.sh
     - run:
         name: Generate protobuf

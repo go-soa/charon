@@ -48,7 +48,7 @@ func RunInTransaction(ctx context.Context, db *sql.DB, f func(tx *sql.Tx) error,
 			}
 
 			return tx.Commit()
-		}(); err == RetryTransaction {
+		}(); errors.Is(err, RetryTransaction) {
 			continue
 		}
 		return err

@@ -54,12 +54,12 @@ jobs:
     - run:
         name: Install tools
         command: |
-          go install github.com/golang/protobuf/protoc-gen-go@v1.2.0
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
           go install golang.org/x/tools/cmd/goimports@v0.25.0
           curl -L -O https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 
           mv test-reporter-latest-linux-amd64 /home/circleci/go/bin/test-reporter
-          bash ./.circleci/scripts/install_protoc.sh
+          bash ./.circleci/scripts/install_protoc.sh linux
     - run:
         name: Generate protobuf
         command: bash ./.circleci/scripts/generate.sh golang
@@ -99,7 +99,7 @@ jobs:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install protoc
-        command: bash ./.circleci/scripts/install_protoc.sh
+        command: bash ./.circleci/scripts/install_protoc.sh linux
     - run:
         name: Install command line tools
         command: |
@@ -183,7 +183,7 @@ jobs:
         key: v1-golang-dependency-{{ checksum "go.sum" }}
     - run:
         name: Install protoc
-        command: bash ./.circleci/scripts/install_protoc.sh
+        command: bash ./.circleci/scripts/install_protoc.sh linux
     - run:
         environment:
           GOPATH: "/home/circleci/project/go"
@@ -204,7 +204,7 @@ jobs:
           pip install grpcio grpcio-tools twine
     - run:
         name: Install protoc
-        command: bash ./.circleci/scripts/install_protoc.sh
+        command: bash ./.circleci/scripts/install_protoc.sh linux
     - run:
         name: Generate protobuf
         environment:

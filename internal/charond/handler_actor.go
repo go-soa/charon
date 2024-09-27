@@ -5,9 +5,9 @@ import (
 	"database/sql"
 
 	"github.com/golang/protobuf/ptypes/wrappers"
-	charonrpc "github.com/piotrkowalczuk/charon/pb/rpc/charond/v1"
 	"github.com/piotrkowalczuk/charon/internal/grpcerr"
 	"github.com/piotrkowalczuk/charon/internal/session"
+	charonrpc "github.com/piotrkowalczuk/charon/pb/rpc/charond/v1"
 	"github.com/piotrkowalczuk/mnemosyne/mnemosynerpc"
 	"google.golang.org/grpc/codes"
 )

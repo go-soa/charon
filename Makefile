@@ -43,11 +43,10 @@ cover: test
 	go tool cover -html=cover.out
 
 get:
-	bash ./.circleci/scripts/get_tool.sh github.com/golang/protobuf/proto v1.2.0
-	go get -u gotest.tools/gotestsum
-	go get -u github.com/vektra/mockery/cmd/mockery
-	go get -u github.com/golang/dep/cmd/dep
-	dep ensure
+	./.circleci/scripts/install_protoc.sh osx
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
+	go install gotest.tools/gotestsum@latest
+	go install github.com/vektra/mockery/cmd/mockery@latest
 
 publish:
 	docker build \

@@ -24,7 +24,7 @@ do
             ${PROTOC} ${PROTO_INCLUDE} --java_out=./publish/java ${PWD}/pb/${protobuf}/*.proto
             ;;
         golang | go)
-            ${PROTOC} ${PROTO_INCLUDE} --go_out=plugins=grpc:${GOPATH}/src ${PWD}/pb/${protobuf}/*.proto
+            ${PROTOC} ${PROTO_INCLUDE} --go-grpc_out=${GOPATH}/src --go_out=${GOPATH}/src ${PWD}/pb/${protobuf}/*.proto
             mockery -case=underscore -dir=./pb/${protobuf} -all -outpkg=$(basename $(dirname "./pb/${protobuf}mock"))mock -output=./pb/${protobuf}mock
             goimports -w ${PWD}/pb
             ;;

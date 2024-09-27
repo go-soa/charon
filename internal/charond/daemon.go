@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/piotrkowalczuk/charon"
-	charonrpc "github.com/piotrkowalczuk/charon/pb/rpc/charond/v1"
 	"github.com/piotrkowalczuk/charon/internal/grpcerr"
+	charonrpc "github.com/piotrkowalczuk/charon/pb/rpc/charond/v1"
 	"github.com/piotrkowalczuk/mnemosyne"
 	"github.com/piotrkowalczuk/mnemosyne/mnemosynerpc"
 	"github.com/piotrkowalczuk/promgrpc/v3"
@@ -163,7 +163,6 @@ func (d *Daemon) Run() (err error) {
 	repos := newRepositories(db)
 
 	d.mnemosyne, d.mnemosyneConn = initMnemosyne(d.opts.MnemosyneAddress, d.logger, clientOpts)
-
 	passwordHasher := initHasher(d.opts.PasswordBCryptCost, d.logger)
 	if d.opts.Test {
 		if err = createDummyTestUser(

@@ -8,21 +8,25 @@ services:
       - 5434:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
   mnemosyned:
     image: piotrkowalczuk/mnemosyne:v0.8.0
     container_name: mnemosyned
     environment:
-      MNEMOSYNED_POSTGRES_SCHEMA: mnemosyne
+      MNEMOSYNED_POSTGRES_ADDRESS: "postgres://postgres:postgres@postgres/postgres?sslmode=disable"
     links:
       - postgres
     ports:
       - 10000:8080
       - 10001:8081
   charond:
-      image: charon
+      image: piotrkowalczuk/charon
       container_name: charond
       environment:
-        MNEMOSYNED_POSTGRES_SCHEMA: mnemosyne
+        CHAROND_POSTGRES_ADDRESS: "postgres://postgres:postgres@postgres/postgres?sslmode=disable"
       links:
         - postgres
       ports:

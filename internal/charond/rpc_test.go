@@ -3,6 +3,7 @@ package charond
 import (
 	"context"
 	"testing"
+	"time"
 
 	charonrpc "github.com/piotrkowalczuk/charon/pb/rpc/charond/v1"
 	"github.com/piotrkowalczuk/mnemosyne"
@@ -47,7 +48,10 @@ func TestRPCServer_minimal(t *testing.T) {
 }
 
 func testRPCServerLogin(t *testing.T, suite *endToEndSuite) context.Context {
-	token, err := suite.charon.auth.Login(context.TODO(), &charonrpc.LoginRequest{
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	t.Cleanup(cancel)
+
+	token, err := suite.charon.auth.Login(ctx, &charonrpc.LoginRequest{
 		Username: "test",
 		Password: "test",
 	})
@@ -56,7 +60,7 @@ func testRPCServerLogin(t *testing.T, suite *endToEndSuite) context.Context {
 	}
 
 	return metadata.NewOutgoingContext(
-		context.Background(),
+		ctx,
 		metadata.Pairs(mnemosyne.AccessTokenMetadataKey, token.Value),
 	)
 }

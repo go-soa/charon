@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"google.golang.org/grpc/connectivity"
 	"net/url"
 	"time"
 
@@ -67,14 +68,23 @@ func initMnemosyne(address string, logger *zap.Logger, opts []grpc.DialOption) (
 	if address == "" {
 		logger.Error("missing mnemosyne address")
 	}
-	conn, err := grpc.Dial(address, opts...)
+
+	cli, err := grpc.NewClient(address, opts...)
 	if err != nil {
-		logger.Error("mnemosyne dial falilure", zap.Error(err), zap.String("address", address))
+		logger.Error("mnemosyne client instantiation failure", zap.Error(err), zap.String("address", address))
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if !cli.WaitForStateChange(ctx, connectivity.Connecting) {
+
+		return nil, nil
 	}
 
 	logger.Info("rpc connection to mnemosyne has been established", zap.String("address", address))
 
-	return mnemosynerpc.NewSessionManagerClient(conn), conn
+	return mnemosynerpc.NewSessionManagerClient(cli), cli
 }
 
 func initHasher(cost int, logger *zap.Logger) password.Hasher {

@@ -278,10 +278,10 @@ jobs:
             protoc-gen-swift --version
 
             # Install gRPC Swift plugin
-            git clone https://github.com/grpc/grpc-swift.git
+            git clone https://github.com/grpc/grpc-swift-protobuf.git
             cd grpc-swift
             swift build -c release
-            cp .build/release/protoc-gen-grpc-swift /usr/local/bin/
+            cp .build/debug/protoc-gen-grpc-swift /usr/local/bin/
             cd ..
 
             # Verify gRPC Swift plugin installation

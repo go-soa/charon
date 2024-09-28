@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -235,5 +236,29 @@ func TestPermissions_String(t *testing.T) {
 				t.Fatalf("wrong output, expected:\n	'%s'\nbut got:\n	'%s'", c.expected, got)
 			}
 		})
+	}
+}
+
+func TestPermissions_Less_asc(t *testing.T) {
+	got := AllPermissions.Copy()
+	sort.Sort(got)
+
+	if got[0] != GroupCanCreate {
+		t.Errorf("wrong group name, expected %s but got %s", GroupCanCreate, got[0])
+	}
+	if got[len(got)-1] != UserPermissionCanRetrieve {
+		t.Errorf("wrong group name, expected %s but got %s", UserPermissionCanRetrieve, got[len(got)-1])
+	}
+}
+
+func TestPermissions_Less_desc(t *testing.T) {
+	got := AllPermissions.Copy()
+	sort.Sort(sort.Reverse(got))
+	
+	if got[0] != UserPermissionCanRetrieve {
+		t.Errorf("wrong group name, expected %s but got %s", UserPermissionCanRetrieve, got[0])
+	}
+	if got[len(got)-1] != GroupCanCreate {
+		t.Errorf("wrong group name, expected %s but got %s", GroupCanCreate, got[len(got)-1])
 	}
 }

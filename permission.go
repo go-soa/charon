@@ -212,6 +212,13 @@ func (p Permissions) Contains(permissions ...Permission) bool {
 	return false
 }
 
+func (p Permissions) Copy() Permissions {
+	res := make(Permissions, len(AllPermissions))
+	copy(res, AllPermissions)
+
+	return res
+}
+
 // Strings maps Permissions into slice of strings.
 func (p Permissions) Strings() (s []string) {
 	s = make([]string, 0, len(p))
@@ -266,16 +273,13 @@ func (p Permissions) Less(i, j int) bool {
 	s1, m1, a1 := p[i].Split()
 	s2, m2, a2 := p[j].Split()
 
-	switch {
-	case s1 < s2:
-		return true
-	case m1 < m2:
-		return true
-	case a1 < a2:
-		return true
-	default:
-		return false
+	if s1 != s2 {
+		return s1 < s2
 	}
+	if m1 != m2 {
+		return m1 < m2
+	}
+	return a1 < a2
 }
 
 // Swap implements sort Interface.

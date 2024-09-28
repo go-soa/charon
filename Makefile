@@ -32,7 +32,6 @@ install:
 	go install -ldflags "${LDFLAGS}" ${PACKAGE_CMD_CONTROL}
 
 gen:
-	#./scripts/generate.sh
 	bash ./.circleci/scripts/generate.sh golang
 
 test:

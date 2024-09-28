@@ -7,6 +7,7 @@ PROTO_INCLUDE="-I=./tmp/pb -I=./vendor/github.com/piotrkowalczuk -I=${GOPATH}/sr
 protobufs=(
     "rpc/${SERVICE}d/v1"
 )
+
 for protobuf in "${protobufs[@]}"
 do
     case $1 in
@@ -27,6 +28,12 @@ do
             ${PROTOC} ${PROTO_INCLUDE} --go-grpc_out=${GOPATH}/src --go_out=${GOPATH}/src ${PWD}/pb/${protobuf}/*.proto
             mockery -case=underscore -dir=./pb/${protobuf} -all -outpkg=$(basename $(dirname "./pb/${protobuf}mock"))mock -output=./pb/${protobuf}mock
             goimports -w ${PWD}/pb
+            ;;
+        swift)
+            ${PROTOC} ${PROTO_INCLUDE} --swift_opt=Visibility=Public --swift_out=publish/swift --grpc-swift_out=publish/swift ${PWD}/pb/${protobuf}/*.proto
+            mkdir -p publish/swift/Sources/Generated/charon/${protobuf}
+            cp publish/swift/github.com/piotrkowalczuk/charon/pb/${protobuf}/* publish/swift/Sources/Generated/charon/${protobuf}/
+            rm -rf publish/swift/github.com
             ;;
         *)
             echo "code generation failure due to unknown language: ${1}"

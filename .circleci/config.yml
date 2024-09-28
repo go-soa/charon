@@ -14,6 +14,10 @@ executors:
     docker:
     - image: cimg/python:3.12.6
     working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
+  swift-executor:
+    docker:
+      - image: swift:6.0
+    working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
   java-executor:
     docker:
     - image: cimg/openjdk:8.0.345
@@ -243,6 +247,44 @@ jobs:
         command: |
           . ./venv/bin/activate
           twine upload ./publish/python/dist/*
+  generate_swift:
+    executor: swift-executor
+    steps:
+      - mkdir_working_directory
+      - checkout
+      - restore_cache:
+          key: v1-golang-dependency-{{ checksum "go.sum" }}
+      - run:
+          name: Install protoc
+          command: bash ./.circleci/scripts/install_protoc.sh linux
+      - run:
+          name: Install protoc plugins for Swift
+          command: |
+            # Install Swift Protobuf plugin
+            git clone https://github.com/apple/swift-protobuf.git
+            cd swift-protobuf
+            swift build -c release
+            cp .build/release/protoc-gen-swift /usr/local/bin/
+            cd ..
+
+            # Verify Swift Protobuf plugin installation
+            protoc-gen-swift --version
+
+            # Install gRPC Swift plugin
+            git clone https://github.com/grpc/grpc-swift.git
+            cd grpc-swift
+            swift build -c release
+            cp .build/release/protoc-gen-grpc-swift /usr/local/bin/
+            cd ..
+
+            # Verify gRPC Swift plugin installation
+            protoc-gen-grpc-swift --version
+      - run:
+          name: Generate protobuf
+          environment:
+            GOPATH: "/home/circleci/project/go"
+          command: |
+            bash ./.circleci/scripts/generate.sh swift
 workflows:
   version: 2
   generate:
@@ -294,6 +336,12 @@ workflows:
     - generate_java:
         requires:
         - lint_protobuf
+        filters:
+          tags:
+            only: /.*/
+    - generate_swift:
+        requires:
+          - lint_protobuf
         filters:
           tags:
             only: /.*/

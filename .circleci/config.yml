@@ -256,6 +256,8 @@ jobs:
           command: |
             mkdir -p /home/circleci/project/home/circleci/project/go/src/github.com/piotrkowalczuk/charon
             chmod -R 777 /home/circleci/project/home/circleci/project/go/src/github.com/piotrkowalczuk/charon
+            apt update
+            apt install curl
       - checkout
       - restore_cache:
           key: v1-golang-dependency-{{ checksum "go.sum" }}

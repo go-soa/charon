@@ -79,6 +79,8 @@ jobs:
           make test
           go tool cover -html=cover.out -o /tmp/test-results/golang/results.html
           cp results.xml /tmp/test-results/golang/results.xml
+          pwd
+          ls -lha
 #          test-reporter format-coverage -d -t=gocov cover.out
     - run:
         name: Code Climate (after build)

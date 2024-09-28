@@ -12,7 +12,7 @@ commands:
 executors:
   python-executor:
     docker:
-    - image: cimg/python:3
+    - image: cimg/python:3.12.6
     working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
   java-executor:
     docker:

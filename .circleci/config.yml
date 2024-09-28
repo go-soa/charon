@@ -71,9 +71,9 @@ jobs:
     - run:
         name: Check generated code for mismatch
         command: git diff --exit-code ./pb
-    - run:
-        name: Code Climate (before build)
-        command: test-reporter before-build
+#    - run:
+#        name: Code Climate (before build)
+#        command: test-reporter before-build
     - run:
         name: Run tests
         environment:
@@ -86,11 +86,11 @@ jobs:
           pwd
           ls -lha
 #          test-reporter format-coverage -d -t=gocov cover.out
-    - run:
-        name: Code Climate (after build)
-        command: |
-          cp cover.out c.out
-          test-reporter after-build --coverage-input-type=gocov
+#    - run:
+#        name: Code Climate (after build)
+#        command: |
+#          cp cover.out c.out
+#          test-reporter after-build --coverage-input-type=gocov
     - store_test_results:
         path: /tmp/test-results
     - store_artifacts:

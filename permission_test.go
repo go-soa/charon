@@ -240,7 +240,7 @@ func TestPermissions_String(t *testing.T) {
 }
 
 func TestPermissions_Less_asc(t *testing.T) {
-	got := AllPermissions.Copy()
+	got := AllPermissions
 	sort.Sort(got)
 
 	if got[0] != GroupCanCreate {
@@ -252,9 +252,9 @@ func TestPermissions_Less_asc(t *testing.T) {
 }
 
 func TestPermissions_Less_desc(t *testing.T) {
-	got := AllPermissions.Copy()
+	got := AllPermissions
 	sort.Sort(sort.Reverse(got))
-	
+
 	if got[0] != UserPermissionCanRetrieve {
 		t.Errorf("wrong group name, expected %s but got %s", UserPermissionCanRetrieve, got[0])
 	}

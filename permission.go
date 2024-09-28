@@ -212,13 +212,6 @@ func (p Permissions) Contains(permissions ...Permission) bool {
 	return false
 }
 
-func (p Permissions) Copy() Permissions {
-	res := make(Permissions, len(AllPermissions))
-	copy(res, AllPermissions)
-
-	return res
-}
-
 // Strings maps Permissions into slice of strings.
 func (p Permissions) Strings() (s []string) {
 	s = make([]string, 0, len(p))

@@ -267,21 +267,13 @@ jobs:
       - run:
           name: Install protoc plugins for Swift
           command: |
-            # Install Swift Protobuf plugin
-            git clone https://github.com/apple/swift-protobuf.git
-            cd swift-protobuf
-            swift build -c release
-            cp .build/release/protoc-gen-swift /usr/local/bin/
-            cd ..
-
-            # Verify Swift Protobuf plugin installation
-            protoc-gen-swift --version
-
             # Install gRPC Swift plugin
             git clone https://github.com/grpc/grpc-swift-protobuf.git
             cd grpc-swift
-            swift build -c release
+            swift build --product protoc-gen-swift
+            swift build --product protoc-gen-grpc-swift
             cp .build/debug/protoc-gen-grpc-swift /usr/local/bin/
+            cp .build/debug/protoc-gen-swift /usr/local/bin/
             cd ..
 
             # Verify gRPC Swift plugin installation

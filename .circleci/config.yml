@@ -250,7 +250,12 @@ jobs:
   generate_swift:
     executor: swift-executor
     steps:
-      - mkdir_working_directory
+      - run:
+          name: Initialize working directory
+          working_directory: /
+          command: |
+            mkdir -p /home/circleci/project/home/circleci/project/go/src/github.com/piotrkowalczuk/charon
+            chmod -R 777 /home/circleci/project/home/circleci/project/go/src/github.com/piotrkowalczuk/charon
       - checkout
       - restore_cache:
           key: v1-golang-dependency-{{ checksum "go.sum" }}

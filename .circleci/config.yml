@@ -269,7 +269,7 @@ jobs:
           command: |
             echo $PATH
             git clone https://github.com/grpc/grpc-swift-protobuf.git
-            cd grpc-swift
+            cd grpc-swift-protobuf
             swift build --product protoc-gen-swift
             swift build --product protoc-gen-grpc-swift
             cp .build/debug/protoc-gen-grpc-swift /usr/local/bin/

@@ -77,8 +77,9 @@ jobs:
         command: |
           mkdir -p /tmp/test-results/golang
           make test
+          go tool cover -html=cover.out -o /tmp/test-results/golang/results.html
           cp results.xml /tmp/test-results/golang/results.xml
-          test-reporter format-coverage -d -t=gocov cover.out
+#          test-reporter format-coverage -d -t=gocov cover.out
     - run:
         name: Code Climate (after build)
         command: |

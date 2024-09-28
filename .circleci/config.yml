@@ -16,7 +16,7 @@ executors:
     working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
   java-executor:
     docker:
-    - image: circleci/openjdk:8
+    - image: cimg/openjdk:8.0.345
     working_directory: /home/circleci/project/go/src/github.com/piotrkowalczuk/charon
   golang-executor:
     docker:
